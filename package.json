@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "description": "Quick Credit React",
   "main": "webpack.config.js",
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  },
   "scripts": {
+    "start": "webpack-dev-server --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
