@@ -1,31 +1,69 @@
-const path = require("path");
-const HTMLWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+const CLT_DIR = path.resolve(__dirname, 'dist');
+const SRC_DIR = path.resolve(__dirname, 'src');
 
 module.exports = {
-  entry: "./index.js",
+  mode: 'development',
+  devtool: 'inline-source-map',
+  entry: [`${SRC_DIR}/index.js`],
   devServer: {
     historyApiFallback: true,
-    host: '0.0.0.0',
+    // host: '0.0.0.0',
     compress: true,
-    port: 8081,
-    contentBase: './dist',
+    port: 8000,
+    contentBase: './build',
   },
-  devtool:'inline-source-map',
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "index_bundle.js"
+    path: `${CLT_DIR}/app`,
+    filename: 'bundle.js',
+    publicPath: '/',
   },
-  //For transforming our JSX and ES6 into normal JS
   module: {
     rules: [
-      { test: /\.(js)$/, use: "babel-loader" },
-      { test: /\.css$/, use: ["style-loader", "css-loader"] }
-    ]
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: 'html-loader',
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              bypassOnDebug: true, // webpack@1.x
+              disable: true, // webpack@2.x and newer
+            },
+          },
+        ],
+      },
+    ],
   },
-  mode: "development",
   plugins: [
-    new HTMLWebpackPlugin({
-      template: path.resolve(__dirname + "/src/index.html")
-    })
-  ]
+    new HtmlWebPackPlugin({
+      template: './src/index.html',
+      filename: './index.html',
+    }),
+  ],
 };
+
