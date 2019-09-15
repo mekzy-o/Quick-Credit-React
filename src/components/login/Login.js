@@ -14,11 +14,11 @@ export class Login extends Component {
                             <div id="login" className="tab-data">
                                 <h1>Sign In</h1>
                                 <form id='login-form'>
-                                    <label for="email"> Email</label>
-                                    <input type="email" id='email' autocomplete="off" />
+                                    <label htmlFor="email"> Email</label>
+                                    <input type="email" id='email' required />
 
-                                    <label for="password"> Password</label>
-                                    <input className='name' id='password' type="password" autocomplete="off" />
+                                    <label htmlFor="password"> Password</label>
+                                    <input className='name' id='password' type="password" required />
 
                                     <button className='btn1' id='login-btn' type="submit">Login</button>
                                     <span className='light-weight'>Dont have an account?<a href='signup.html'> Sign Up</a></span>
